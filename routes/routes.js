@@ -1,20 +1,32 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID } = graphql;
 
+// Models
 const Book = require('../models/book.model');
-const books = require('../seeds/books.seed');
+const Author = require('../models/author.model');
 
-const RootQuery =  new GraphQLObjectType({
+// Seeds
+const books = require('../seeds/books.seed');
+const authors = require('../seeds/authors.seed');
+
+const query =  new GraphQLObjectType({
   name: 'RootQuery',
   fields: {
     book: {
       type: Book,
-      args: { id: { type: GraphQLString } },
+      args: { id: { type: GraphQLID } },
       resolve (parent, args) {
         return books.filter(book => book.id = args.id)[0];
+      }
+    },
+    author: {
+      type: Author,
+      args: { id: { type: GraphQLID } },
+      resolve (parent, args) {
+        return authors.filter(author => author.id = args.id)[0];
       }
     }
   }
 });
 
-module.exports = new GraphQLSchema({ query: RootQuery });
+module.exports = new GraphQLSchema({ query });
