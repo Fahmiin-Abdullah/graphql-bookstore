@@ -1,14 +1,8 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
 
-const Book = require('../models/book');
-
-// Seed Books
-const books = [
-  { id: '1', name: 'Name of the Wind', genre: 'Fantasy' },
-  { id: '2', name: 'The Final Empire', genre: 'Fantasy' },
-  { id: '3', name: 'The Long Earth', genre: 'Sci-Fi' }
-];
+const Book = require('../models/book.model');
+const books = require('../seeds/books.seed');
 
 const RootQuery =  new GraphQLObjectType({
   name: 'RootQuery',
