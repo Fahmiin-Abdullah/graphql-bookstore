@@ -16,26 +16,26 @@ const query =  new GraphQLObjectType({
       type: BookType,
       args: { id: { type: GraphQLID } },
       resolve (parent, args) {
-        return books.filter(book => book.id = args.id)[0];
+        return Book.findById(args.id);
       }
     },
     author: {
       type: AuthorType,
       args: { id: { type: GraphQLID } },
       resolve (parent, args) {
-        return authors.filter(author => author.id = args.id)[0];
+        return Author.findById(args.id);
       }
     },
     books: {
       type: new GraphQLList(BookType),
       resolve (parent, args) {
-        return books;
+        return Book.find({});
       }
     },
     authors: {
       type: new GraphQLList(AuthorType),
       resolve (parent, arg) {
-        return authors;
+        return Author.find({});
       }
     }
   }

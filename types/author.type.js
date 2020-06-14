@@ -5,7 +5,7 @@ module.exports = AuthorType = new GraphQLObjectType({
   name: 'AuthorType',
   fields: () => {
     const BookType = require('./book.type');
-    const booksSeed = require('../seeds/books.seed');
+    const Book = require('../models/book.model');
 
     return {
       id: { type: GraphQLID },
@@ -14,7 +14,7 @@ module.exports = AuthorType = new GraphQLObjectType({
       books: {
         type: new GraphQLList(BookType),
         resolve (parent, args) {
-          return booksSeed.filter(book => book.authorId == parent.id);
+          return Book.find({ authorId: parent.id });
         }
       }
     }
