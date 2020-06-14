@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList, GraphQLInt } = graphql;
 
 // Types
 const BookType = require('../types/book.type');
@@ -41,4 +41,37 @@ const query =  new GraphQLObjectType({
   }
 });
 
-module.exports = new GraphQLSchema({ query });
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    createAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt }
+      },
+      resolve (parent, args) {
+        let author = new Author({
+          name: args.name, age: args.age
+        });
+        return author.save();
+      }
+    },
+    createBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        authorId: { type: GraphQLID },
+      },
+      resolve (parents, args) {
+        let book = new Book({
+          name: args.name, genre: args.genre, authorId: args.authorId
+        });
+        return book.save();
+      }
+    }
+  }
+})
+
+module.exports = new GraphQLSchema({ query, mutation });
