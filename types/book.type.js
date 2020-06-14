@@ -1,10 +1,10 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID } = graphql;
 
-module.exports = Book = new GraphQLObjectType({
-  name: 'Book',
+module.exports = BookType = new GraphQLObjectType({
+  name: 'BookType',
   fields: () => {
-    const Author = require('./author.model');
+    const AuthorType = require('./author.type');
     const authorsSeed = require('../seeds/authors.seed');
 
     return {
@@ -12,7 +12,7 @@ module.exports = Book = new GraphQLObjectType({
       name: { type: GraphQLString },
       genre: { type: GraphQLString },
       author: {
-        type: Author,
+        type: AuthorType,
         resolve (parent, args) {
           return authorsSeed.filter(author => author.id == parent.authorId)[0];
         }
