@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList } = graphql;
 
 // Models
 const Book = require('../models/book.model');
@@ -24,6 +24,18 @@ const query =  new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve (parent, args) {
         return authors.filter(author => author.id = args.id)[0];
+      }
+    },
+    books: {
+      type: new GraphQLList(Book),
+      resolve (parent, args) {
+        return books;
+      }
+    },
+    authors: {
+      type: new GraphQLList(Author),
+      resolve (parent, arg) {
+        return authors;
       }
     }
   }
