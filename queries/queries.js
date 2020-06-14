@@ -5,9 +5,9 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList 
 const BookType = require('../types/book.type');
 const AuthorType = require('../types/author.type');
 
-// Seeds
-const books = require('../seeds/books.seed');
-const authors = require('../seeds/authors.seed');
+// Models
+const Book = require('../models/book.model');
+const Author = require('../models/author.model');
 
 const query =  new GraphQLObjectType({
   name: 'RootQuery',
